@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncSpace | Call Testing</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b1120;
+            color: #e5e7eb;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #111827;
+            border-bottom: 1px solid #263244;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .status {
+            color: #4ade80;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .heading h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #94a3b8;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .video-area {
+            height: 320px;
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .video-icon {
+            font-size: 55px;
+            margin-bottom: 12px;
+        }
+
+        .video-area p {
+            color: #94a3b8;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 18px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary {
+            background: #334155;
+            color: white;
+        }
+
+        .danger {
+            background: #991b1b;
+            color: white;
+        }
+
+        .check {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px 0;
+            border-bottom: 1px solid #263244;
+        }
+
+        .check:last-child {
+            border-bottom: none;
+        }
+
+        .check-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .check-description {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .check-result {
+            color: #facc15;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .metric {
+            background: #0f172a;
+            border: 1px solid #263244;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #60a5fa;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        @media (max-width: 850px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 18px;
+            }
+
+            .heading h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Sync<span>Space</span></div>
+        <div class="status">● Testing Environment</div>
+    </header>
+
+    <main>
+
+        <section class="heading">
+            <h1>WebRTC Call Testing</h1>
+            <p>Run connection checks and inspect call performance.</p>
+        </section>
+
+        <section class="layout">
+
+            <div class="card">
+                <h2>Call Preview</h2>
+
+                <div class="video-area" id="videoArea">
+                    <div>
+                        <div class="video-icon">▣</div>
+                        <p>Camera preview will appear here</p>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="primary" onclick="startCall()">
+                        Start Test
+                    </button>
+
+                    <button class="secondary" onclick="toggleMicrophone()">
+                        Microphone: On
+                    </button>
+
+                    <button class="secondary" onclick="toggleCamera()">
+                        Camera: On
+                    </button>
+
+                    <button class="danger" onclick="endCall()">
+                        End Test
+                    </button>
+                </div>
+
+                <p class="message" id="callMessage">
+                    Ready to start a WebRTC test session.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>Connection Checks</h2>
+
+                <div class="check">
+                    <div>
+                        <div class="check-name">Browser Support</div>
+                        <div class="check-description">
+                            Check browser compatibility
+                        </div>
+                    </div>
+
+                    <div class="check-result" id="browserResult">
+                        Pending
+                    </div>
+                </div>
+
+                <div class="check">
+                    <div>
+                        <div class="check-name">Microphone</div>
+                        <div class="check-description">
+                            Check audio input
+                        </div>
+                    </div>
+
+                    <div class="check-result" id="microphoneResult">
+                        Pending
+                    </div>
+                </div>
+
+                <div class="check">
+                    <div>
+                        <div class="check-name">Camera</div>
+                        <div class="check-description">
+                            Check video input
+                        </div>
+                    </div>
+
+                    <div class="check-result" id="cameraResult">
+                        Pending
+                    </div>
+                </div>
+
+                <div class="check">
+                    <div>
+                        <div class="check-name">Network</div>
+                        <div class="check-description">
+                            Check connection stability
+                        </div>
+                    </div>
+
+                    <div class="check-result" id="networkResult">
+                        Pending
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="metrics">
+
+            <div class="metric">
+                <div class="metric-label">Latency</div>
+                <div class="metric-value" id="latency">-- ms</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Packet Loss</div>
+                <div class="metric-value" id="packetLoss">-- %</div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-label">Jitter</div>
+                <div class="metric-value" id="jitter">-- ms</div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        let microphoneOn = true;
+        let cameraOn = true;
+
+        function startCall() {
+            document.getElementById("callMessage").textContent =
+                "Test started. Running browser, device, and network checks...";
+
+            document.getElementById("browserResult").textContent = "Passed";
+            document.getElementById("microphoneResult").textContent = "Passed";
+            document.getElementById("cameraResult").textContent = "Passed";
+            document.getElementById("networkResult").textContent = "Stable";
+
+            document.getElementById("latency").textContent = "72 ms";
+            document.getElementById("packetLoss").textContent = "0.8%";
+            document.getElementById("jitter").textContent = "14 ms";
+
+            document.getElementById("videoArea").innerHTML = `
+                <div>
+                    <div class="video-icon">●</div>
+                    <p>Test call is running</p>
+                </div>
+            `;
+        }
+
+        function toggleMicrophone() {
+            microphoneOn = !microphoneOn;
+
+            event.target.textContent =
+                microphoneOn ? "Microphone: On" : "Microphone: Off";
+        }
+
+        function toggleCamera() {
+            cameraOn = !cameraOn;
+
+            event.target.textContent =
+                cameraOn ? "Camera: On" : "Camera: Off";
+        }
+
+        function endCall() {
+            document.getElementById("callMessage").textContent =
+                "Test ended. Results are ready for review.";
+
+            document.getElementById("videoArea").innerHTML = `
+                <div>
+                    <div class="video-icon">▣</div>
+                    <p>Camera preview stopped</p>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
