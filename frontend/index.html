@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncSpace | Call Intelligence</title>
+
+    <title>SyncSpace Dashboard</title>
 
     <style>
         * {
@@ -14,11 +15,12 @@
         }
 
         body {
-            background: #0b1120;
-            color: #e5e7eb;
+            min-height: 100vh;
+            background: #0f172a;
+            color: #e2e8f0;
         }
 
-        .app {
+        .layout {
             display: flex;
             min-height: 100vh;
         }
@@ -26,276 +28,188 @@
         .sidebar {
             width: 240px;
             background: #111827;
+            padding: 25px 18px;
             border-right: 1px solid #263244;
-            padding: 28px 18px;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: bold;
-            margin-bottom: 45px;
+            color: #38bdf8;
+            margin-bottom: 40px;
         }
 
-        .logo span {
-            color: #60a5fa;
-        }
-
-        .menu-title {
-            color: #64748b;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin: 22px 12px 12px;
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .menu-item {
             display: block;
-            width: 100%;
-            padding: 13px 14px;
-            margin-bottom: 8px;
-            color: #cbd5e1;
+            padding: 13px 15px;
+            color: #94a3b8;
             text-decoration: none;
             border-radius: 8px;
-            cursor: pointer;
+            transition: 0.3s;
         }
 
         .menu-item:hover,
         .menu-item.active {
-            background: #1e3a8a;
-            color: white;
+            background: #1e293b;
+            color: #38bdf8;
         }
 
-        .main {
+        .main-content {
             flex: 1;
-            padding: 30px;
-            min-width: 0;
+            padding: 35px;
         }
 
-        .topbar {
+        .top-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 35px;
+            gap: 20px;
+        }
+
+        .top-section h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .top-section p {
+            color: #94a3b8;
+        }
+
+        .status {
+            padding: 10px 15px;
+            background: #14532d;
+            color: #bbf7d0;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-bottom: 30px;
         }
 
-        .topbar h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .topbar p {
-            color: #94a3b8;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .avatar {
-            width: 42px;
-            height: 42px;
-            background: #2563eb;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-weight: bold;
-        }
-
-        .online {
-            color: #4ade80;
-            font-size: 13px;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-
         .card {
-            background: #111827;
-            border: 1px solid #263244;
-            border-radius: 14px;
-            padding: 22px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
         }
 
-        .stat-label {
+        .card h3 {
             color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 14px;
+            font-size: 15px;
+            margin-bottom: 15px;
         }
 
-        .stat-value {
+        .card .number {
             font-size: 32px;
             font-weight: bold;
-            margin-bottom: 8px;
+            color: #f8fafc;
         }
 
-        .stat-change {
-            color: #4ade80;
+        .card .small-text {
+            color: #64748b;
+            margin-top: 8px;
             font-size: 13px;
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 22px;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 22px;
+        .panel {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
         }
 
-        .card-header h2 {
-            font-size: 19px;
-        }
-
-        .badge {
-            background: #14532d;
-            color: #86efac;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-        }
-
-        .quality-score {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            margin-bottom: 25px;
-        }
-
-        .score-circle {
-            width: 125px;
-            height: 125px;
-            border: 10px solid #2563eb;
-            border-right-color: #334155;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            flex-shrink: 0;
-        }
-
-        .score-circle strong {
-            font-size: 30px;
-        }
-
-        .score-circle small {
-            color: #94a3b8;
-        }
-
-        .quality-info h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
-        }
-
-        .quality-info p {
-            color: #94a3b8;
-            line-height: 1.5;
-            font-size: 14px;
-        }
-
-        .metric {
-            margin-bottom: 18px;
-        }
-
-        .metric-top {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .metric-top span:first-child {
-            color: #cbd5e1;
-        }
-
-        .metric-top span:last-child {
-            color: #60a5fa;
-        }
-
-        .progress {
-            height: 8px;
-            background: #263244;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: #3b82f6;
-            border-radius: 20px;
+        .panel h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
         .activity {
-            list-style: none;
-        }
-
-        .activity li {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             padding: 15px 0;
-            border-bottom: 1px solid #263244;
+            border-bottom: 1px solid #334155;
         }
 
-        .activity li:last-child {
+        .activity:last-child {
             border-bottom: none;
         }
 
-        .activity-name {
-            font-weight: bold;
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0c4a6e;
+            color: #38bdf8;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+        .activity-text {
+            flex: 1;
+        }
+
+        .activity-text strong {
+            display: block;
             margin-bottom: 5px;
         }
 
-        .activity-time {
-            color: #64748b;
-            font-size: 12px;
-        }
-
-        .activity-status {
-            color: #4ade80;
+        .activity-text span {
+            color: #94a3b8;
             font-size: 13px;
         }
 
-        .start-test {
-            margin-top: 22px;
-            width: 100%;
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-button {
+            display: block;
             padding: 15px;
-            border: none;
-            border-radius: 9px;
-            background: #2563eb;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
         }
 
-        .start-test:hover {
-            background: #1d4ed8;
+        .action-button:hover {
+            background: #0369a1;
+            border-color: #38bdf8;
         }
 
-        .notice {
-            margin-top: 22px;
-            background: #172554;
-            border: 1px solid #1d4ed8;
-            padding: 16px;
-            border-radius: 10px;
-            color: #bfdbfe;
-            line-height: 1.5;
-            font-size: 14px;
+        .footer-note {
+            margin-top: 30px;
+            color: #64748b;
+            font-size: 13px;
+            text-align: center;
         }
 
-        @media (max-width: 1000px) {
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: 1fr;
             }
 
             .content-grid {
@@ -303,40 +217,31 @@
             }
         }
 
-        @media (max-width: 700px) {
-            .app {
-                display: block;
+        @media (max-width: 650px) {
+            .layout {
+                flex-direction: column;
             }
 
             .sidebar {
                 width: 100%;
-                padding: 18px;
+                border-right: none;
+                border-bottom: 1px solid #263244;
             }
 
             .logo {
                 margin-bottom: 20px;
             }
 
-            .menu-item {
-                display: inline-block;
-                width: auto;
-                margin-right: 5px;
+            .menu {
+                flex-direction: row;
+                flex-wrap: wrap;
             }
 
-            .main {
-                padding: 20px;
+            .main-content {
+                padding: 22px;
             }
 
-            .topbar {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .quality-score {
+            .top-section {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -345,201 +250,128 @@
 </head>
 
 <body>
-
-    <div class="app">
+    <div class="layout">
 
         <aside class="sidebar">
-            <div class="logo">Sync<span>Space</span></div>
+            <div class="logo">SyncSpace</div>
 
-            <div class="menu-title">Workspace</div>
+            <nav class="menu">
+                <a class="menu-item active" href="index.html">
+                    Dashboard
+                </a>
 
-            <a class="menu-item active" href="index.html">
-                Dashboard
-            </a>
+                <a class="menu-item" href="message-testing.html">
+                    Message Testing
+                </a>
 
-            <a class="menu-item" href="call-testing.html">
-                Call Testing
-            </a>
-
-            <a class="menu-item">
-                Test Reports
-            </a>
-
-            <div class="menu-title">System</div>
-
-            <a class="menu-item">
-                API Health
-            </a>
-
-            <a class="menu-item">
-                Settings
-            </a>
+                <a class="menu-item" href="call-testing.html">
+                    Audio Call Testing
+                </a>
+            </nav>
         </aside>
 
-        <main class="main">
+        <main class="main-content">
 
-            <div class="topbar">
+            <section class="top-section">
                 <div>
-                    <h1>Call Intelligence Dashboard</h1>
-                    <p>Monitor, test, and analyze WebRTC call performance.</p>
+                    <h1>Dashboard</h1>
+                    <p>Monitor your AI call-testing workspace.</p>
                 </div>
 
-                <div class="profile">
-                    <div>
-                        <strong>Omshi</strong>
-                        <div class="online">● System online</div>
-                    </div>
-
-                    <div class="avatar">O</div>
+                <div class="status">
+                    ● System Online
                 </div>
-            </div>
+            </section>
 
-            <section class="stats">
+            <section class="cards">
 
                 <div class="card">
-                    <div class="stat-label">Total Calls Tested</div>
-                    <div class="stat-value">248</div>
-                    <div class="stat-change">↑ 18% this week</div>
+                    <h3>Total Tests</h3>
+                    <div class="number">24</div>
+                    <div class="small-text">Tests completed</div>
                 </div>
 
                 <div class="card">
-                    <div class="stat-label">Successful Calls</div>
-                    <div class="stat-value">231</div>
-                    <div class="stat-change">93.1% success rate</div>
+                    <h3>Average Risk Score</h3>
+                    <div class="number">32%</div>
+                    <div class="small-text">Across all tests</div>
                 </div>
 
                 <div class="card">
-                    <div class="stat-label">Average Latency</div>
-                    <div class="stat-value">72 ms</div>
-                    <div class="stat-change">↓ 12 ms improvement</div>
-                </div>
-
-                <div class="card">
-                    <div class="stat-label">AI Issues Detected</div>
-                    <div class="stat-value">17</div>
-                    <div class="stat-change">Needs review</div>
+                    <h3>System Status</h3>
+                    <div class="number">Ready</div>
+                    <div class="small-text">Backend connection available</div>
                 </div>
 
             </section>
 
             <section class="content-grid">
 
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Latest Call Analysis</h2>
-                        <span class="badge">Completed</span>
-                    </div>
+                <div class="panel">
+                    <h2>Recent Activity</h2>
 
-                    <div class="quality-score">
-                        <div class="score-circle">
-                            <div>
-                                <strong>86</strong>
-                                <small>/100</small>
-                            </div>
-                        </div>
+                    <div class="activity">
+                        <div class="activity-icon">✓</div>
 
-                        <div class="quality-info">
-                            <h3>Excellent Quality</h3>
-                            <p>
-                                The latest call completed successfully.
-                                Minor background noise was detected.
-                            </p>
+                        <div class="activity-text">
+                            <strong>Audio test completed</strong>
+                            <span>Microphone and WebRTC checks passed</span>
                         </div>
                     </div>
 
-                    <div class="metric">
-                        <div class="metric-top">
-                            <span>Audio Quality</span>
-                            <span>92%</span>
-                        </div>
+                    <div class="activity">
+                        <div class="activity-icon">✓</div>
 
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 92%;"></div>
+                        <div class="activity-text">
+                            <strong>Message analysis completed</strong>
+                            <span>Risk level and detected words generated</span>
                         </div>
                     </div>
 
-                    <div class="metric">
-                        <div class="metric-top">
-                            <span>Video Quality</span>
-                            <span>88%</span>
-                        </div>
+                    <div class="activity">
+                        <div class="activity-icon">✓</div>
 
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 88%;"></div>
+                        <div class="activity-text">
+                            <strong>Backend connected</strong>
+                            <span>FastAPI service is running locally</span>
                         </div>
                     </div>
 
-                    <div class="metric">
-                        <div class="metric-top">
-                            <span>Network Stability</span>
-                            <span>81%</span>
+                    <div class="activity">
+                        <div class="activity-icon">✓</div>
+
+                        <div class="activity-text">
+                            <strong>Workspace initialized</strong>
+                            <span>SyncSpace project is ready for testing</span>
                         </div>
-
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 81%;"></div>
-                        </div>
-                    </div>
-
-                    <button
-                        class="start-test"
-                        onclick="window.location.href='call-testing.html'">
-                        Start New Call Test
-                    </button>
-
-                    <div class="notice" id="testMessage">
-                        Ready to perform a new WebRTC call test.
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Recent Test Sessions</h2>
-                        <span class="badge">Live</span>
+                <div class="panel">
+                    <h2>Quick Actions</h2>
+
+                    <div class="quick-actions">
+                        <a class="action-button" href="message-testing.html">
+                            Analyze a Message →
+                        </a>
+
+                        <a class="action-button" href="call-testing.html">
+                            Start Audio Test →
+                        </a>
+
+                        <a class="action-button" href="http://127.0.0.1:8000/docs" target="_blank">
+                            Open API Documentation →
+                        </a>
                     </div>
-
-                    <ul class="activity">
-                        <li>
-                            <div>
-                                <div class="activity-name">Chrome → Chrome</div>
-                                <div class="activity-time">2 minutes ago</div>
-                            </div>
-
-                            <div class="activity-status">Passed</div>
-                        </li>
-
-                        <li>
-                            <div>
-                                <div class="activity-name">Firefox → Chrome</div>
-                                <div class="activity-time">15 minutes ago</div>
-                            </div>
-
-                            <div class="activity-status">Passed</div>
-                        </li>
-
-                        <li>
-                            <div>
-                                <div class="activity-name">Mobile Network Test</div>
-                                <div class="activity-time">32 minutes ago</div>
-                            </div>
-
-                            <div class="activity-status">Passed</div>
-                        </li>
-
-                        <li>
-                            <div>
-                                <div class="activity-name">High Latency Test</div>
-                                <div class="activity-time">1 hour ago</div>
-                            </div>
-
-                            <div class="activity-status">Review</div>
-                        </li>
-                    </ul>
                 </div>
 
             </section>
 
+            <div class="footer-note">
+                SyncSpace • AI-powered communication testing workspace
+            </div>
+
         </main>
     </div>
-
 </body>
 </html>

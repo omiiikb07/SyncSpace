@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncSpace | Message Testing</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b1120;
+            color: #e5e7eb;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #111827;
+            border-right: 1px solid #263244;
+            padding: 28px 18px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 45px;
+        }
+
+        .logo span {
+            color: #60a5fa;
+        }
+
+        .menu-title {
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu-item {
+            text-decoration: none;
+            color: #94a3b8;
+            padding: 13px 14px;
+            border-radius: 10px;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .main {
+            flex: 1;
+            padding: 35px;
+        }
+
+        .topbar {
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .topbar p {
+            color: #94a3b8;
+        }
+
+        .card {
+            max-width: 850px;
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 18px;
+            padding: 28px;
+        }
+
+        .card h2 {
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            resize: vertical;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 15px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #3b82f6;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .primary {
+            background: #2563eb;
+        }
+
+        .secondary {
+            background: #334155;
+        }
+
+        .result {
+            display: none;
+            margin-top: 28px;
+            padding: 22px;
+            background: #0f172a;
+            border: 1px solid #263244;
+            border-radius: 14px;
+        }
+
+        .result h3 {
+            margin-bottom: 18px;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .result-item {
+            background: #111827;
+            border: 1px solid #263244;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .result-label {
+            color: #94a3b8;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .high {
+            color: #f87171;
+        }
+
+        .low {
+            color: #4ade80;
+        }
+
+        .detected {
+            margin-top: 18px;
+            color: #facc15;
+            font-size: 14px;
+        }
+
+        .analysis {
+            margin-top: 14px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .error {
+            display: none;
+            margin-top: 20px;
+            color: #f87171;
+            background: #3f1d2e;
+            border: 1px solid #7f1d1d;
+            border-radius: 10px;
+            padding: 14px;
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #263244;
+            }
+
+            .logo {
+                margin-bottom: 20px;
+            }
+
+            .menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+
+        <aside class="sidebar">
+            <div class="logo">Sync<span>Space</span></div>
+
+            <div class="menu-title">Workspace</div>
+
+            <nav class="menu">
+                <a class="menu-item" href="index.html">Dashboard</a>
+                <a class="menu-item active" href="message-testing.html">
+                    Message Testing
+                </a>
+                <a class="menu-item" href="call-testing.html">
+                    Audio Call Testing
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <div class="topbar">
+                <h1>Message Testing</h1>
+                <p>Analyze messages for suspicious or harmful content.</p>
+            </div>
+
+            <section class="card">
+                <h2>Message Analysis</h2>
+
+                <p class="description">
+                    Enter a message below. SyncSpace will send it to the backend
+                    for risk analysis.
+                </p>
+
+                <label for="messageInput">Enter message</label>
+
+                <textarea
+                    id="messageInput"
+                    placeholder="Example: Your bank account is blocked. Verify your OTP urgently."
+                ></textarea>
+
+                <div class="button-row">
+                    <button id="analyzeButton" class="primary">
+                        Analyze Message
+                    </button>
+
+                    <button id="clearButton" class="secondary">
+                        Clear
+                    </button>
+                </div>
+
+                <div id="errorMessage" class="error"></div>
+
+                <div id="result" class="result">
+                    <h3>Analysis Result</h3>
+
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <div class="result-label">Risk Level</div>
+                            <div id="riskLevel" class="result-value">--</div>
+                        </div>
+
+                        <div class="result-item">
+                            <div class="result-label">Risk Score</div>
+                            <div class="result-value">
+                                <span id="riskScore">--</span>/100
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detected">
+                        <strong>Detected Words:</strong>
+                        <span id="detectedWords">None</span>
+                    </div>
+
+                    <p class="analysis">
+                        <strong>Analysis:</strong>
+                        <span id="analysisText">--</span>
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const messageInput = document.getElementById("messageInput");
+        const analyzeButton = document.getElementById("analyzeButton");
+        const clearButton = document.getElementById("clearButton");
+
+        const result = document.getElementById("result");
+        const errorMessage = document.getElementById("errorMessage");
+
+        const riskLevel = document.getElementById("riskLevel");
+        const riskScore = document.getElementById("riskScore");
+        const detectedWords = document.getElementById("detectedWords");
+        const analysisText = document.getElementById("analysisText");
+
+        analyzeButton.addEventListener("click", async () => {
+            const message = messageInput.value.trim();
+
+            result.style.display = "none";
+            errorMessage.style.display = "none";
+
+            if (message === "") {
+                errorMessage.textContent = "Please enter a message first.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            analyzeButton.disabled = true;
+            analyzeButton.textContent = "Analyzing...";
+
+            try {
+                const response = await fetch(
+                    "http://127.0.0.1:8000/analyze/message",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            message: message
+                        })
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Backend request failed.");
+                }
+
+                const data = await response.json();
+
+                riskLevel.textContent = data.risk_level;
+                riskScore.textContent = data.risk_score;
+
+                riskLevel.className = "result-value";
+
+                if (data.risk_level === "High") {
+                    riskLevel.classList.add("high");
+                } else {
+                    riskLevel.classList.add("low");
+                }
+
+                detectedWords.textContent =
+                    data.detected_words.length > 0
+                        ? data.detected_words.join(", ")
+                        : "None";
+
+                analysisText.textContent = data.analysis;
+
+                result.style.display = "block";
+
+            } catch (error) {
+                errorMessage.textContent =
+                    "Could not connect to the backend. Make sure FastAPI is running.";
+                errorMessage.style.display = "block";
+            } finally {
+                analyzeButton.disabled = false;
+                analyzeButton.textContent = "Analyze Message";
+            }
+        });
+
+        clearButton.addEventListener("click", () => {
+            messageInput.value = "";
+            result.style.display = "none";
+            errorMessage.style.display = "none";
+        });
+    </script>
+</body>
+</html>
