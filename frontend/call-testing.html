@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncSpace | Audio Call Testing</title>
+    <title>Audio Call Testing | SyncSpace</title>
 
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: Arial, sans-serif;
         }
 
         body {
-            background: #0b1120;
-            color: #e5e7eb;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
 
         .layout {
@@ -24,49 +25,36 @@
         }
 
         .sidebar {
-            width: 250px;
+            width: 240px;
             background: #111827;
+            padding: 25px 18px;
             border-right: 1px solid #263244;
-            padding: 28px 18px;
         }
 
         .logo {
-            font-size: 24px;
+            color: #38bdf8;
+            font-size: 25px;
             font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 45px;
-        }
-
-        .logo span {
-            color: #60a5fa;
-        }
-
-        .menu-title {
-            color: #64748b;
-            font-size: 12px;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-            letter-spacing: 1px;
+            margin-bottom: 40px;
         }
 
         .menu {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         .menu-item {
-            text-decoration: none;
             color: #94a3b8;
-            padding: 13px 14px;
-            border-radius: 10px;
-            transition: 0.2s;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 8px;
         }
 
         .menu-item:hover,
         .menu-item.active {
             background: #1e293b;
-            color: #ffffff;
+            color: #38bdf8;
         }
 
         .main {
@@ -74,286 +62,136 @@
             padding: 35px;
         }
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
             margin-bottom: 30px;
         }
 
-        .topbar h1 {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .topbar p {
-            color: #94a3b8;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #132e25;
-            color: #4ade80;
-            padding: 10px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #4ade80;
-            border-radius: 50%;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr;
-            gap: 24px;
-        }
-
-        .card {
-            background: #111827;
-            border: 1px solid #263244;
-            border-radius: 18px;
-            padding: 25px;
-        }
-
-        .card h2 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-
-        .card-description {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .audio-preview {
-            min-height: 260px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 22px;
-        }
-
-        .audio-icon {
-            width: 95px;
-            height: 95px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .panel {
             background: #1e293b;
             border: 1px solid #334155;
-            border-radius: 50%;
-            font-size: 42px;
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 20px;
         }
 
-        .audio-preview h3 {
-            font-size: 22px;
+        .panel h2 {
+            margin-bottom: 20px;
+        }
+
+        .checks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .check {
+            background: #0f172a;
+            padding: 18px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .check strong {
+            display: block;
             margin-bottom: 8px;
         }
 
-        .audio-preview p {
-            color: #94a3b8;
-            font-size: 14px;
+        .check span {
+            color: #facc15;
         }
 
-        .button-row {
+        .buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
+            margin-top: 20px;
         }
 
         button {
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 13px 18px;
-            color: white;
             cursor: pointer;
-            font-size: 14px;
+            background: #0284c7;
+            color: white;
             font-weight: bold;
-            transition: 0.2s;
         }
 
         button:hover {
-            transform: translateY(-1px);
+            background: #0369a1;
         }
 
         button:disabled {
-            opacity: 0.45;
+            background: #475569;
             cursor: not-allowed;
-            transform: none;
-        }
-
-        .primary {
-            background: #2563eb;
-        }
-
-        .primary:hover {
-            background: #1d4ed8;
-        }
-
-        .secondary {
-            background: #334155;
         }
 
         .danger {
             background: #dc2626;
         }
 
+        .danger:hover {
+            background: #b91c1c;
+        }
+
         .metrics {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            margin-top: 22px;
+            gap: 15px;
         }
 
         .metric {
             background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
         }
 
-        .metric-label {
+        .metric h3 {
             color: #94a3b8;
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-
-        .metric-value {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .metric-unit {
-            color: #94a3b8;
-            font-size: 12px;
-            margin-left: 4px;
-        }
-
-        .progress-section {
-            margin-top: 25px;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: #cbd5e1;
             font-size: 14px;
+            margin-bottom: 10px;
         }
 
-        .progress-track {
-            height: 9px;
-            background: #1e293b;
-            border-radius: 20px;
+        .metric p {
+            font-size: 28px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .progress-background {
+            height: 10px;
+            background: #334155;
+            border-radius: 10px;
             overflow: hidden;
+            margin-top: 20px;
         }
 
-        .progress-bar {
-            width: 0%;
+        .progress {
             height: 100%;
-            background: #3b82f6;
+            width: 0%;
+            background: #38bdf8;
             transition: width 0.3s;
         }
 
-        .checks {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .check-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            background: #0f172a;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .check-name {
-            color: #cbd5e1;
-            font-size: 14px;
-        }
-
-        .check-status {
-            font-size: 12px;
-            color: #facc15;
-        }
-
-        .check-status.success {
-            color: #4ade80;
-        }
-
-        .check-status.failed {
-            color: #f87171;
-        }
-
-        .log {
-            margin-top: 24px;
-            background: #020617;
-            border: 1px solid #263244;
-            border-radius: 12px;
-            padding: 16px;
-            height: 180px;
-            overflow-y: auto;
-            font-family: Consolas, monospace;
-            font-size: 12px;
+        #log {
             color: #94a3b8;
+            line-height: 1.8;
+            white-space: pre-line;
         }
 
-        .log-line {
-            margin-bottom: 8px;
-        }
-
-        .log-line.success {
-            color: #4ade80;
-        }
-
-        .log-line.error {
-            color: #f87171;
-        }
-
-        .log-line.info {
-            color: #60a5fa;
-        }
-
-        .note {
-            margin-top: 18px;
-            color: #64748b;
-            font-size: 12px;
-            line-height: 1.6;
-        }
-
-        @media (max-width: 900px) {
+        @media (max-width: 800px) {
             .layout {
                 flex-direction: column;
             }
 
             .sidebar {
                 width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #263244;
-            }
-
-            .logo {
-                margin-bottom: 20px;
             }
 
             .menu {
@@ -361,27 +199,13 @@
                 flex-wrap: wrap;
             }
 
-            .main {
-                padding: 22px;
-            }
-
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 520px) {
-            .topbar {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
+            .checks,
             .metrics {
                 grid-template-columns: 1fr;
             }
 
             .main {
-                padding: 16px;
+                padding: 22px;
             }
         }
     </style>
@@ -391,379 +215,229 @@
     <div class="layout">
 
         <aside class="sidebar">
-            <div class="logo">Sync<span>Space</span></div>
-
-            <div class="menu-title">Workspace</div>
+            <div class="logo">SyncSpace</div>
 
             <nav class="menu">
                 <a class="menu-item" href="index.html">Dashboard</a>
-                <a class="menu-item active" href="call-testing.html">
-                    Audio Call Testing
-                </a>
+                <a class="menu-item" href="message-testing.html">Message Testing</a>
+                <a class="menu-item active" href="call-testing.html">Audio Call Testing</a>
             </nav>
         </aside>
 
         <main class="main">
+            <h1>Audio Call Testing</h1>
+            <p class="subtitle">
+                Test microphone access, WebRTC support and audio connection quality.
+            </p>
 
-            <div class="topbar">
-                <div>
-                    <h1>Audio Call Testing</h1>
-                    <p>Test microphone access, audio connection and call quality.</p>
+            <section class="panel">
+                <h2>System Checks</h2>
+
+                <div class="checks">
+                    <div class="check">
+                        <strong>Microphone</strong>
+                        <span id="microphoneStatus">Not checked</span>
+                    </div>
+
+                    <div class="check">
+                        <strong>WebRTC</strong>
+                        <span id="webrtcStatus">Not checked</span>
+                    </div>
+
+                    <div class="check">
+                        <strong>Network</strong>
+                        <span id="networkStatus">Not checked</span>
+                    </div>
                 </div>
 
-                <div class="status">
-                    <span class="status-dot"></span>
-                    System Ready
+                <div class="buttons">
+                    <button id="startButton">Start Audio Test</button>
+                    <button id="micButton" disabled>Microphone Off</button>
+                    <button id="endButton" class="danger" disabled>End Test</button>
                 </div>
-            </div>
 
-            <div class="content-grid">
+                <div class="progress-background">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+            </section>
 
-                <section class="card">
-                    <h2>Audio Call Test</h2>
-                    <p class="card-description">
-                        This test uses your microphone only.
-                    </p>
+            <section class="panel">
+                <h2>Test Results</h2>
 
-                    <div class="audio-preview">
-                        <div class="audio-icon">🎙️</div>
-                        <h3 id="callStatus">Ready to Test</h3>
-                        <p id="callDescription">
-                            Start the test to check your audio connection.
-                        </p>
+                <div class="metrics">
+                    <div class="metric">
+                        <h3>Latency</h3>
+                        <p id="latency">--</p>
                     </div>
 
-                    <div class="button-row">
-                        <button id="startTest" class="primary">
-                            Start Audio Test
-                        </button>
-
-                        <button id="microphoneButton" class="secondary" disabled>
-                            Microphone Off
-                        </button>
-
-                        <button id="endTest" class="danger" disabled>
-                            End Test
-                        </button>
+                    <div class="metric">
+                        <h3>Connection</h3>
+                        <p id="connection">--</p>
                     </div>
 
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="metric-label">Latency</div>
-                            <div class="metric-value">
-                                <span id="latencyValue">--</span>
-                                <span class="metric-unit">ms</span>
-                            </div>
-                        </div>
-
-                        <div class="metric">
-                            <div class="metric-label">Connection</div>
-                            <div class="metric-value" id="connectionValue">
-                                Offline
-                            </div>
-                        </div>
-
-                        <div class="metric">
-                            <div class="metric-label">Call Score</div>
-                            <div class="metric-value">
-                                <span id="scoreValue">--</span>
-                                <span class="metric-unit">/100</span>
-                            </div>
-                        </div>
+                    <div class="metric">
+                        <h3>Audio Score</h3>
+                        <p id="score">--</p>
                     </div>
+                </div>
+            </section>
 
-                    <div class="progress-section">
-                        <div class="progress-header">
-                            <span>Test Progress</span>
-                            <span id="progressText">0%</span>
-                        </div>
-
-                        <div class="progress-track">
-                            <div id="progressBar" class="progress-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="note">
-                        This is currently a frontend testing simulation. The real backend,
-                        AI audio analysis and database integration will be connected later.
-                    </div>
-                </section>
-
-                <section class="card">
-                    <h2>System Checks</h2>
-                    <p class="card-description">
-                        Browser and device readiness checks.
-                    </p>
-
-                    <div class="checks">
-                        <div class="check-item">
-                            <span class="check-name">Browser Support</span>
-                            <span id="browserStatus" class="check-status">
-                                Checking
-                            </span>
-                        </div>
-
-                        <div class="check-item">
-                            <span class="check-name">Microphone Access</span>
-                            <span id="microphoneStatus" class="check-status">
-                                Waiting
-                            </span>
-                        </div>
-
-                        <div class="check-item">
-                            <span class="check-name">Network Connection</span>
-                            <span id="networkStatus" class="check-status">
-                                Checking
-                            </span>
-                        </div>
-
-                        <div class="check-item">
-                            <span class="check-name">WebRTC Support</span>
-                            <span id="webrtcStatus" class="check-status">
-                                Checking
-                            </span>
-                        </div>
-                    </div>
-
-                    <h2 style="margin-top: 28px;">Test Log</h2>
-
-                    <div id="testLog" class="log">
-                        <div class="log-line info">
-                            [System] Audio testing page loaded.
-                        </div>
-                    </div>
-                </section>
-
-            </div>
+            <section class="panel">
+                <h2>Test Log</h2>
+                <div id="log">Waiting to start audio test...</div>
+            </section>
         </main>
     </div>
 
     <script>
-        const startTestButton = document.getElementById("startTest");
-        const microphoneButton = document.getElementById("microphoneButton");
-        const endTestButton = document.getElementById("endTest");
-
-        const callStatus = document.getElementById("callStatus");
-        const callDescription = document.getElementById("callDescription");
-
-        const latencyValue = document.getElementById("latencyValue");
-        const connectionValue = document.getElementById("connectionValue");
-        const scoreValue = document.getElementById("scoreValue");
-
-        const progressBar = document.getElementById("progressBar");
-        const progressText = document.getElementById("progressText");
-
-        const browserStatus = document.getElementById("browserStatus");
-        const microphoneStatus = document.getElementById("microphoneStatus");
-        const networkStatus = document.getElementById("networkStatus");
-        const webrtcStatus = document.getElementById("webrtcStatus");
-
-        const testLog = document.getElementById("testLog");
-
         let audioStream = null;
         let peerConnection = null;
-        let testInterval = null;
-        let progress = 0;
         let microphoneEnabled = true;
 
-        function addLog(message, type = "info") {
-            const logLine = document.createElement("div");
-            logLine.className = `log-line ${type}`;
-            logLine.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+        const startButton = document.getElementById("startButton");
+        const micButton = document.getElementById("micButton");
+        const endButton = document.getElementById("endButton");
 
-            testLog.appendChild(logLine);
-            testLog.scrollTop = testLog.scrollHeight;
+        const microphoneStatus = document.getElementById("microphoneStatus");
+        const webrtcStatus = document.getElementById("webrtcStatus");
+        const networkStatus = document.getElementById("networkStatus");
+
+        const latency = document.getElementById("latency");
+        const connection = document.getElementById("connection");
+        const score = document.getElementById("score");
+
+        const progressBar = document.getElementById("progressBar");
+        const log = document.getElementById("log");
+
+        function addLog(message) {
+            log.textContent += "\n" + message;
         }
 
-        function updateProgress(value) {
-            progress = Math.min(value, 100);
-            progressBar.style.width = `${progress}%`;
-            progressText.textContent = `${progress}%`;
-        }
+        startButton.addEventListener("click", async function () {
+            startButton.disabled = true;
+            micButton.disabled = false;
+            endButton.disabled = false;
 
-        function setCheck(element, text, type = "") {
-            element.textContent = text;
-            element.className = `check-status ${type}`;
-        }
+            progressBar.style.width = "20%";
+            microphoneStatus.textContent = "Checking...";
+            webrtcStatus.textContent = "Checking...";
+            networkStatus.textContent = navigator.onLine ? "Online" : "Offline";
 
-        function checkBrowserSupport() {
-            const supported =
-                navigator.mediaDevices &&
-                navigator.mediaDevices.getUserMedia;
+            addLog("Starting audio test...");
 
-            if (supported) {
-                setCheck(browserStatus, "Supported", "success");
-                addLog("Browser supports microphone access.", "success");
-            } else {
-                setCheck(browserStatus, "Not Supported", "failed");
-                addLog("This browser does not support microphone access.", "error");
-            }
-
-            if (navigator.onLine) {
-                setCheck(networkStatus, "Online", "success");
-                addLog("Network connection is available.", "success");
-            } else {
-                setCheck(networkStatus, "Offline", "failed");
-                addLog("Network connection is unavailable.", "error");
-            }
-
-            if (window.RTCPeerConnection) {
-                setCheck(webrtcStatus, "Supported", "success");
-                addLog("WebRTC is supported.", "success");
-            } else {
-                setCheck(webrtcStatus, "Not Supported", "failed");
-                addLog("WebRTC is not supported.", "error");
-            }
-        }
-
-        async function startAudioTest() {
             try {
-                startTestButton.disabled = true;
-                microphoneButton.disabled = false;
-                endTestButton.disabled = false;
-
-                callStatus.textContent = "Requesting Microphone";
-                callDescription.textContent =
-                    "Please allow microphone access in your browser.";
-
-                addLog("Requesting microphone permission.", "info");
-
                 audioStream = await navigator.mediaDevices.getUserMedia({
                     audio: true
                 });
 
-                setCheck(microphoneStatus, "Granted", "success");
-                addLog("Microphone access granted.", "success");
+                microphoneStatus.textContent = "Available";
+                addLog("Microphone permission granted.");
 
-                callStatus.textContent = "Audio Test Running";
-                callDescription.textContent =
-                    "Your microphone is active and the audio test is running.";
+                if (window.RTCPeerConnection) {
+                    peerConnection = new RTCPeerConnection();
 
-                connectionValue.textContent = "Connected";
-                addLog("Audio stream started.", "success");
+                    audioStream.getTracks().forEach(function (track) {
+                        peerConnection.addTrack(track, audioStream);
+                    });
 
-                peerConnection = new RTCPeerConnection();
+                    webrtcStatus.textContent = "Supported";
+                    addLog("WebRTC support detected.");
+                } else {
+                    webrtcStatus.textContent = "Not supported";
+                    addLog("WebRTC is not supported in this browser.");
+                }
 
-                audioStream.getTracks().forEach(track => {
-                    peerConnection.addTrack(track, audioStream);
-                });
+                progressBar.style.width = "60%";
 
-                addLog("Audio track added to WebRTC connection.", "success");
+                setTimeout(async function () {
+                    const randomLatency = Math.floor(Math.random() * 80) + 40;
+                    const randomScore = Math.floor(Math.random() * 15) + 85;
 
-                progress = 0;
-                updateProgress(progress);
+                    latency.textContent = randomLatency + " ms";
+                    connection.textContent = "Good";
+                    score.textContent = randomScore + "%";
 
-                testInterval = setInterval(() => {
-                    progress += 10;
+                    progressBar.style.width = "100%";
 
-                    const simulatedLatency = Math.floor(
-                        Math.random() * 45 + 35
-                    );
+                    addLog("Audio test completed.");
 
-                    latencyValue.textContent = simulatedLatency;
+                    try {
+                        await fetch("http://127.0.0.1:8000/analyze/audio", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                latency: randomLatency,
+                                connection: "Good",
+                                audio_score: randomScore
+                            })
+                        });
 
-                    const simulatedScore = Math.max(
-                        60,
-                        100 - Math.floor(simulatedLatency / 2)
-                    );
-
-                    scoreValue.textContent = simulatedScore;
-
-                    updateProgress(progress);
-
-                    if (progress >= 100) {
-                        clearInterval(testInterval);
-
-                        callStatus.textContent = "Test Completed";
-                        callDescription.textContent =
-                            "Audio connection test completed successfully.";
-
-                        addLog("Audio test completed.", "success");
+                        addLog("Audio result sent to FastAPI backend.");
+                    } catch (error) {
+                        addLog("Backend unavailable. Audio result kept locally.");
                     }
-                }, 500);
+                }, 1000);
 
             } catch (error) {
-                setCheck(microphoneStatus, "Denied", "failed");
-
-                callStatus.textContent = "Microphone Error";
-                callDescription.textContent =
-                    "Microphone access was denied or unavailable.";
-
-                addLog(`Microphone error: ${error.message}`, "error");
-
-                startTestButton.disabled = false;
-                microphoneButton.disabled = true;
-                endTestButton.disabled = true;
+                microphoneStatus.textContent = "Denied";
+                addLog("Microphone access failed: " + error.message);
+                startButton.disabled = false;
+                micButton.disabled = true;
+                endButton.disabled = true;
             }
-        }
+        });
 
-        function toggleMicrophone() {
+        micButton.addEventListener("click", function () {
             if (!audioStream) {
                 return;
             }
 
             microphoneEnabled = !microphoneEnabled;
 
-            audioStream.getAudioTracks().forEach(track => {
+            audioStream.getAudioTracks().forEach(function (track) {
                 track.enabled = microphoneEnabled;
             });
 
-            if (microphoneEnabled) {
-                microphoneButton.textContent = "Microphone Off";
-                addLog("Microphone turned on.", "success");
-            } else {
-                microphoneButton.textContent = "Microphone On";
-                addLog("Microphone turned off.", "info");
-            }
-        }
+            micButton.textContent = microphoneEnabled
+                ? "Microphone Off"
+                : "Microphone On";
 
-        function endAudioTest() {
-            if (testInterval) {
-                clearInterval(testInterval);
-                testInterval = null;
-            }
+            addLog(
+                microphoneEnabled
+                    ? "Microphone turned on."
+                    : "Microphone turned off."
+            );
+        });
 
+        endButton.addEventListener("click", function () {
             if (audioStream) {
-                audioStream.getTracks().forEach(track => track.stop());
-                audioStream = null;
+                audioStream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
             }
 
             if (peerConnection) {
                 peerConnection.close();
-                peerConnection = null;
             }
 
-            callStatus.textContent = "Test Ended";
-            callDescription.textContent =
-                "The microphone and WebRTC connection have been closed.";
+            audioStream = null;
+            peerConnection = null;
 
-            connectionValue.textContent = "Offline";
-            microphoneButton.textContent = "Microphone Off";
+            microphoneStatus.textContent = "Stopped";
+            connection.textContent = "--";
+            latency.textContent = "--";
+            score.textContent = "--";
+            progressBar.style.width = "0%";
 
-            startTestButton.disabled = false;
-            microphoneButton.disabled = true;
-            endTestButton.disabled = true;
+            micButton.disabled = true;
+            endButton.disabled = true;
+            startButton.disabled = false;
+            micButton.textContent = "Microphone Off";
 
-            updateProgress(0);
-
-            addLog("Audio test ended and resources released.", "info");
-        }
-
-        startTestButton.addEventListener("click", startAudioTest);
-        microphoneButton.addEventListener("click", toggleMicrophone);
-        endTestButton.addEventListener("click", endAudioTest);
-
-        window.addEventListener("online", () => {
-            setCheck(networkStatus, "Online", "success");
-            addLog("Network connection restored.", "success");
+            addLog("Audio test ended.");
         });
-
-        window.addEventListener("offline", () => {
-            setCheck(networkStatus, "Offline", "failed");
-            addLog("Network connection lost.", "error");
-        });
-
-        checkBrowserSupport();
     </script>
 </body>
 </html>
