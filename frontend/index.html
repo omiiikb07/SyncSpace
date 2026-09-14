@@ -353,14 +353,27 @@
 
             <div class="menu-title">Workspace</div>
 
-            <a class="menu-item active">Dashboard</a>
-            <a class="menu-item">Call Testing</a>
-            <a class="menu-item">Test Reports</a>
+            <a class="menu-item active" href="index.html">
+                Dashboard
+            </a>
+
+            <a class="menu-item" href="call-testing.html">
+                Call Testing
+            </a>
+
+            <a class="menu-item">
+                Test Reports
+            </a>
 
             <div class="menu-title">System</div>
 
-            <a class="menu-item">API Health</a>
-            <a class="menu-item">Settings</a>
+            <a class="menu-item">
+                API Health
+            </a>
+
+            <a class="menu-item">
+                Settings
+            </a>
         </aside>
 
         <main class="main">
@@ -467,7 +480,9 @@
                         </div>
                     </div>
 
-                    <button class="start-test" onclick="startTest()">
+                    <button
+                        class="start-test"
+                        onclick="window.location.href='call-testing.html'">
                         Start New Call Test
                     </button>
 
@@ -525,15 +540,6 @@
 
         </main>
     </div>
-
-    <script>
-        function startTest() {
-            const message = document.getElementById("testMessage");
-
-            message.textContent =
-                "Test initialized. WebRTC connection checks will appear here once the backend is connected.";
-        }
-    </script>
 
 </body>
 </html>
